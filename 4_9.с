@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+
+  system("clear");
+  //Загадываю случайное число
+
+  srand(time(NULL));
+  
+  int my_number = rand()%10+1;
+
+  int i, your_number;
+
+  for (i=1;i<4;i++)
+    {
+      printf("Итак, ваше число:");
+      scanf("%d", &your_number);
+      if (your_number == my_number)
+	{
+	  printf("Поздравляю, вы угадали\n");
+	  break;
+	}
+      else
+	if (your_number < my_number)
+	  printf("Мое число больше\n");
+	else
+	  printf("Мое число меньше\n");
+      printf("Ваша попытка № %d\n", i+1);
+    }
+  if (your_number != my_number)
+    {
+      printf("Сожалею, но Вы проиграли.");
+      printf("Мое число %d\n", my_number);
+    }
+
+  return 0;
+}
