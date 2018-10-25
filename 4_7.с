@@ -1,0 +1,17 @@
+/* вычисляет и выводит сумму чётных 
+целых чисел от 2 до 30*/
+
+#include <stdio.h>
+int main()
+{
+  system("mkdir ttty");
+  
+  // создание папки в памяти пк //
+  
+  int sum=0,i;
+  for (i=2; i<=30; i++)
+    if (i%2==0)
+      sum+=i;
+  printf("Выводим сумму %d\n", sum);
+    return 0;
+}
