@@ -1,3 +1,5 @@
+/*опредение погоды*/
+
 #include <stdio.h>
 
 int main()
