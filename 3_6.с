@@ -1,0 +1,44 @@
+#include <stdio.h>
+int main () 
+{
+int p, ch, k;
+printf("введите число \n");
+scanf("%d", &ch);
+k=0; 
+while(ch!=0)
+{
+p=ch%10;
+ch=((ch-p)/10);
+if (p==7)
+k++;
+}
+printf("выводим количество встреченных семерок%d ", k);
+
+return 0;
+}
+//3.5_палиндром
+
+#include <stdio.h>
+int main () {
+int a, b, c, d, e, f;
+printf("введите число \n");
+scanf("%d",&f);
+e = f % 10;
+f = ((f-e)/10);
+a = f%10;
+
+f=((f-a)/10);
+b=f%10;
+
+f=((f-b)/10);
+c=f%10;
+
+f=((f-c)/10);
+d=f%10;
+
+if (e==d && a==c)
+printf("данное число - палиндром");
+else
+printf("данное число не является палиндромом");
+return 0;
+}
