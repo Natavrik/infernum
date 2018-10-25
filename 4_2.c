@@ -13,3 +13,4 @@ int main()
   printf("Факториал числа = %d\n",NN);
   return 0;
 }
+
