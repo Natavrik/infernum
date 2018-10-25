@@ -1,0 +1,31 @@
+#include "stdio.h"
+int main()
+{
+int a, i, array[100];
+for (i = 0; i < 100; i++)
+{
+array[i] = 0;
+}
+printf("Введите число: ");
+scanf("%d", &a);
+i = 0;
+while (a != 0)
+{
+if (a % 2 == 0)
+{
+array[i] = 0;
+a = a / 2;
+}
+else
+{
+array[i] = 1;
+a = a / 2;
+}
+i++;
+}
+i = i - 1;
+for (; i >= 0; i--)
+
+printf("%d", array[i]);
+return 0;
+}
