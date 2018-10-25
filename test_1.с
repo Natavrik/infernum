@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int main()
+{
+int a1, a2, a3;
+float b1, b2;
+printf("a1=");
+scanf("%d", &a1);
+printf("a2=");
+scanf("%d", &a2);
+printf("a3=");
+scanf("%d", &a3);
+
+printf("b1=");
+scanf("%f", &b1);
+printf("b2=");
+scanf("%e", &b2);
+
+float A, B, C;
+
+if ((1 + a1 / a2 != 0) && (a2 + b2 != 0))
+{
+A = (1 + a1 / a2) / (1 + a3 / a2) + b1 / b2 + (a1 * b1) / (a2 + b2);
+printf("A=%f\n", A);
+}
+else
+{
+printf("A не имеет значения\n");
+}
+if (a2 + a3 != 0)
+{
+B = (10e3 * b1) + (10e4 * b2) + a1 / (a2 + a3);
+printf("B=%f\n", B);
+}
+else
+{
+printf("B не имеет значения\n");
+}
+if ((a1 != 0) && (b1 != 0) && (a2 != 0) && (b2 != 0))
+{
+C = 1 / 2 + 2 / a1 + 3 / b1 - 4 / a2 - 5 / b2;
+printf("C=%f\n", C);
+}
+else
+{
+printf("C не имеет значения\n");
+}
+return 0;
+}
