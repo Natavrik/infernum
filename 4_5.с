@@ -1,0 +1,20 @@
+/*вычислить значение числа "ПИ"
+с заданной точностью 4 верных знака */
+
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+  double s=0;
+  long int n,i,k=1;
+  //printf("n=");scanf("%ld", &n);
+  for(i=1; fabs((4*s)-(2*asin(1)))>0.000001; i+=2)
+    {
+      s+=(float) k / i;
+      k*=-1;
+    }
+  printf("%lf\n", 4*s);
+  printf("%lf\n", 2*asin(1));
+
+  return 0;
+}
