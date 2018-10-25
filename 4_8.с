@@ -1,0 +1,50 @@
+/* банк */
+
+#include <stdio.h>
+int main()
+{
+  float Money=0,Online=1,Num,Online2=1;
+  int q;
+  
+      while(Online2==1)
+	{
+	   if(Online==1)
+    {
+	  printf("Выберете номер требуемой операции:  \n\n 1)Посложить деньги на счет \n 2)Снять деньги со счета\n 3)Посмотреть счет \n 4)Закрыть счет \n 5)Закончить сеанс\n\n");
+      scanf("%d",&q);
+      switch (q)
+	{
+	case 1:
+	  printf("Какую сумму желаете ввести на счет\n");
+	  scanf("%f",&Num);
+	  Money+=Num;
+	  printf("Текущий счет %.2f \n ",Money);
+	  break;
+	case 2:
+	  printf("Какую сумму желаете снять\n");
+	  scanf("%f",&Num);
+	  if(Money>Num){
+	    Money-=Num;
+	    printf("Остаток на счету %.2f \n",Money );
+	  }
+	  else
+	    printf("Недостаточно средств\n");
+	  break;
+	case 3:
+	  printf("На счету находится %.2f \n",Money);
+	  break;
+	case 4:
+	  Online-=1;
+	  break;
+	case 5:
+	  Online2-=1;
+	  break;
+	default:
+	  printf("Неккоректно выбран номер операции\n");
+	  break;	      
+	}
+    }
+	   else { printf("Счет закрыт\n"); break; }
+    }
+  return 0;
+}
