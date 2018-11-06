@@ -1,0 +1,23 @@
+#include <stdio.h>
+int invers(int q)
+{
+    int Num=0;
+    while(q!=0)
+    {
+        Num=(q%10)+(Num*10);
+        q/=10;
+    }
+    return Num;
+}
+
+
+
+int main ()
+{
+    int q,w;
+    printf("Число\n");
+    scanf("%d",&q);
+    w=invers(q);
+    printf("%d\n",w);
+    return 0;
+}
