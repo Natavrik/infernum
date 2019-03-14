@@ -1,0 +1,40 @@
+# include <stdio.h>
+# include <stdlib.h>
+
+int main ()
+{
+    int i, j, n, m;
+    int **a;
+
+    printf("Введите количество строк: "); scanf("%d", &n);
+    printf("Введите количество столбцов: "); scanf("%d", &m);
+
+    a = (int **) malloc (n * sizeof (int *));
+
+    for (i=0; i<n; i++)
+    {
+        a[i] = (int *) malloc (m * sizeof(int));
+
+        for (j=0; j<m; j++)
+        {
+            printf("a[%d][%d] = ", i, j); 
+            scanf ("%d",&a[i][j]);
+        }
+    }
+
+
+    for  (i=0; i<n; i++)
+    {
+        for (j=0; j<m; j++) 
+        {
+            printf ("%5d ", a[i][j]);
+        }
+        printf("\n");
+    }
+
+
+    for (i=0; i<n; i++)
+    free (a[i]);
+    free (a);
+    return 0;
+}
