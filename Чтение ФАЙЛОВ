@@ -1,0 +1,49 @@
+#include <stdio.h>
+int main ()
+
+{
+    int years;
+    char first_name[30], last_name[30];
+    char position[100];
+
+    FILE *fpeople;
+
+  /*  if ((fpeople = fopen("test","a"))== NULL)
+    
+    printf("Ошибка! Файл не может быть открыт для записи!");
+    
+    else
+    {
+        printf ("Введите фамилию, имя, возраст, должность сотрудника\n");
+        scanf("%s%s%d%s", last_name, first_name, &years, position);
+
+        while (!feof(stdin))
+
+            {
+                fprintf(fpeople, "%s %s %d %s\n", last_name, first_name, years, position);
+                printf("введите фамилию, имя, возраст, должность сотрудника\n");
+                scanf("%s%s%d%s", last_name, first_name, &years, position );
+            }
+        fclose (fpeople);
+        }
+        
+
+        */
+
+         if ((fpeople = fopen("test","r"))== NULL)
+         printf("Ошибка! Файл не может быть открыт для чтения!");
+         else 
+         {
+             fscanf (fpeople, "%s%s%d%s", last_name, first_name, &years, position);
+             while (!feof(fpeople))
+             {
+                 printf("Фамилия: %s Имя: %s Возраст: %d Должность: %s\n", last_name, first_name, years, position);
+                 fscanf(fpeople, "%s%s%d%s", last_name, first_name, &years, position);
+             }
+             fclose(fpeople);
+         }
+    
+    
+    
+    return 0;
+}
