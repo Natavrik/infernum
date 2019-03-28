@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main ()
+{
+    int N;
+    printf("N=");
+    scanf("%d", &N);
+    srand (time(NULL));
+    int i;
+    float r;
+    FILE *filedata;
+
+    if ((filedata = fopen ("data.dat", "w"))==NULL)
+    printf("Не могу открыть файл для записи");
+
+    else 
+    {
+        for (i=0; i<N; i++)
+        {
+            printf("%f\n", r = (float) (rand () % 100)/100);
+            fwrite (&r, sizeof (float), 1, filedata); // сколько блоков в 1 байт 
+        }
+        fclose (filedata);
+    }
+    return 0;
+}
