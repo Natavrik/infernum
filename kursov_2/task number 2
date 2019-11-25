@@ -2,6 +2,7 @@
 #include<iomanip>
 #include<fstream>
 using namespace std;
+
 class Polynom
 {
 public:
