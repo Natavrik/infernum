@@ -54,11 +54,11 @@ int main() {
 	SetConsoleOutputCP(1251);
 	student students[] = {
 		student(1, "Иванов Иван"),
-        student(2, "Сидорова Юля"),
-        student(3, "Петрова Павла"),
-        student(4, "Романович Роман"),
-        student(5, "Комиссаров Вадим"),
-        student(6, "Щепкин Игорь")
+		student(2, "Сидорова Юля"),
+		student(3, "Петрова Павла"),
+		student(4, "Романович Роман"),
+		student(5, "Комиссаров Вадим"),
+		student(6, "Щепкин Игорь")
 	};
 	int n = sizeof(students) / sizeof(student); /// длина
 	spisok(students, n);
