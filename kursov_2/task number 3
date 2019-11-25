@@ -1,0 +1,79 @@
+#include <string>
+#include <iostream>
+#include <Windows.h>
+#define NULL '\0'
+using namespace std;
+class student {
+    private:
+        int number;
+        string name;
+    public:
+        void SetNumber(int number) {this->number = number;}
+        void SetName(string name) {	this->name = name;}
+        student(int number, string name)
+        {
+            this->number = number;
+            this->name = name;
+        }
+
+        student() { this->number = 0; this->name = NULL;}
+        void show() { cout << " Номер:\t" << number << "\tИмя:\t" << name << endl; }
+
+        int GetNumber() { return number; }
+        string GetName() { return name; }
+
+};
+template <class T>class struct1 {
+private:
+	T s1;
+	struct1* next;
+public:
+	struct1(T s, struct1* d) {
+		next = d;
+		s1 = s;
+	}
+	T getT() { return s1; }
+	struct1* getstruct1() { return next; }
+
+};
+template <class T>void spisok(T* s, int n) {
+	struct1<T>* start = NULL;
+	for (int i = 0; i < n; i++) {
+		start = new struct1<T>(s[i], start);
+	}
+	struct1<T>* next = start;
+	while (next != NULL) {
+		next->getT().show();
+		next = next->getstruct1();
+	}
+}
+void clear ();
+void clear () {cout<<"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";}
+int main() {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	student students[] = {
+		student(1, "Иванов Иван"),
+        student(2, "Сидорова Юля"),
+        student(3, "Петрова Павла"),
+        student(4, "Романович Роман"),
+        student(5, "Комиссаров Вадим"),
+        student(6, "Щепкин Игорь")
+	};
+	int n = sizeof(students) / sizeof(student); /// длина
+	spisok(students, n);
+    int index;
+    cout << "Введите номер удаляемой строки: ";
+    cin >> index;
+    cout << endl;
+    index--;
+    for(int i = index; i < n-1;++i)
+    students[i] = students[i+1];
+    n--;
+    cout << "Данные, после удаления строки:\n";
+    for(int i = 0; i < n; ++i)
+    students[i].show();
+    clear();
+	system("pause");
+	return 0;
+}
