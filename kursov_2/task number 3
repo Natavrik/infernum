@@ -3,7 +3,7 @@
 #include <Windows.h>
 #define NULL '\0'
 using namespace std;
-class student {
+class users {
     private:
         int     number;
         string  name;
@@ -12,13 +12,13 @@ class student {
         void SetNumber(int number) {this->number = number;}
         void SetName(string name) {	this->name = name;}
         void SetAge(int age) {this->age = age;}
-        student(int number, string name, int age)
+        users(int number, string name, int age)
         {
             this->number = number;
             this->name = name;
             this->age = age;
         }
-        student() { this->number = 0; this->name = NULL; this->age = 0;}
+        users() { this->number = 0; this->name = NULL; this->age = 0;}
         void show ()
         {
             cout.width(4); cout<<left<<"ID:"<<number<<"\t";
@@ -59,28 +59,28 @@ void clear () {cout<<"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";}
 int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	student students[] = {
-		student(1, "Иванов Иван", 31),
-		student(2, "Сидорова Юля", 43),
-		student(3, "Петрова Павла", 56),
-		student(4, "Романович Роман", 23),
-		student(5, "Комиссаров Вадим", 78),
-		student(6, "Щепкин Игорь", 33)
-			      };
-	int n = sizeof(students) / sizeof(student); /// длина
-	spisok(students, n);
+	users u[] = {
+		users(1, "Иванов Иван", 31),
+        users(2, "Сидорова Юля", 43),
+        users(3, "Петрова Павла", 56),
+        users(4, "Романович Роман", 23),
+        users(5, "Комиссаров Вадим", 78),
+        users(6, "Щепкин Игорь", 33)
+	};
+	int n = sizeof(u) / sizeof(users); /// длина
+	spisok(u, n);
     int index;
     cout << "\n\nВведите ID удаляемого пользователя: ";
     cin >> index;
     cout << endl;
     index--;
     for(int i = index; i < n-1;++i)
-    students[i] = students[i+1];
+    u[i] = u[i+1];
     n--;
     clear();
     cout << "Данные, после удаления пользователя:\n\n";
     for(int i = 0; i < n; ++i)
-    students[i].show();
+    u[i].show();
     clear();
 	system("pause");
 	return 0;
