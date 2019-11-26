@@ -1,6 +1,4 @@
 #include<iostream>
-#include<iomanip>
-#include<fstream>
 using namespace std;
 
 class Polynom
@@ -15,17 +13,18 @@ public:
     Polynom(const Polynom &); //копирования
     ~Polynom();//деструктор
     Polynom operator+(const Polynom &);   // оператор сложения двух полиномов
-    Polynom operator+=(int);
     Polynom operator-(const Polynom &);   // оператор вычитания двух полиномов
     Polynom operator*(const Polynom &);   // оператор умножения
-    Polynom operator*(int);
     Polynom operator/(const Polynom &);
-    Polynom operator/(int);
+    Polynom operator%(const Polynom &);
     Polynom operator=(const Polynom &);   // оператор присваивания
     bool    operator==(const Polynom&);	  // оператор сравнения
+    bool    empty ();
+    void    deleteZero();
+    void    addKoef(int, double);
     friend ostream &operator<< (ostream &s, const Polynom &c); // перегруженный оператор вывода
     friend istream &operator >> (istream &s, Polynom &c); // перегруженный оператор ввода
-    double &operator()(int i)
+    double &operator[](int i)
     {
         return koef[i];
     }
@@ -33,13 +32,37 @@ public:
 Polynom::Polynom()
 {
     koef = NULL;
+    n=-1;
 }
-/*
-Polynom::Polynom()
+void Polynom:: deleteZero()
 {
-    this->pol=pol;
+    int i;
+    for(i = 0; i < n && koef[n-i]==0; i++)
+        ;
+    n-=i;
 }
-*/
+void Polynom::addKoef(int a, double q)
+{
+    if(n < a){
+        double* temp = new double[a+1];
+        for (int i = 0; i < a+1; i++) temp[i]=0;
+        for (int i = 0; i < n+1; i++) temp[i]=koef[i];
+        delete[]koef;
+        koef=temp;
+        n = a;
+    }
+    koef[a]=q;
+}
+
+bool Polynom:: empty()
+{
+    int i = 0;
+    for (; i <= n;  i++)
+        if (koef[i]!=0)
+            return false;
+    return true;
+}
+
 Polynom::~Polynom()
 {
     delete[]koef;
@@ -63,23 +86,26 @@ Polynom::Polynom(const Polynom &f)
 }
 
 
-Polynom Polynom::operator-(const Polynom &t) 
+Polynom Polynom::operator-(const Polynom &t)
 {
     int i;
     if (n >= t.n)//А>B
     {
-        Polynom Z = *this;
+        Polynom Z(*this);
         for (i = 0; i <= t.n; i++)
             Z.koef[i] = koef[i] - t.koef[i];
+            Z.deleteZero();
         return Z;
     }
     else//B>A
     {
         Polynom Z(t.n);
+        Z.n = t.n;
         for (i = 0; i <= n; i++)
             Z.koef[i] = -t.koef[i] + koef[i];
         for (i = n + 1; i <= t.n; i++)
             Z.koef[i] = -t.koef[i];
+            Z.deleteZero();
         return Z;
     }
 }
@@ -91,6 +117,7 @@ Polynom Polynom::operator+(const Polynom &t)
         Polynom Z=*this;
         for (i = 0; i <= n; i++)
             Z.koef[i] = koef[i] + t.koef[i];
+            Z.deleteZero();
         return Z;
     }
     else//A<B
@@ -98,17 +125,11 @@ Polynom Polynom::operator+(const Polynom &t)
         Polynom Z=t;
         for (i = 0; i <= n; i++)
             Z.koef[i] = t.koef[i] + koef[i];
+            Z.deleteZero();
         return Z;
     }
 }
 
-Polynom Polynom::operator+=(int s) // int and polynom
-{
-    Polynom rts;
-    for (int i = 0; i <= n; i++)
-        rts.koef[i] = koef[i] + s;
-    return rts;
-}
 
 
 
@@ -116,41 +137,59 @@ Polynom Polynom::operator*(const Polynom &t)
 {
     int i,j;
     Polynom Y(n+t.n);
+    Y.n = n+t.n;
     for (i = 0; i <= n; i++)
         for (j = 0; j <= t.n; j++)
             Y.koef[i + j] += koef[i]*t.koef[j];
+            Y.deleteZero();
     return Y;
 }
 
-Polynom Polynom::operator*(int y)
-{
-    Polynom e = *this;
-    int i;
-    for (i = 0; i <= n; i++)
-        e.koef[i]+=koef[i]*y;
-    return e;
-}
+
 
 Polynom Polynom::operator/(const Polynom & b)
 {
-    // error: cannot convert 'Polynom' to 'int' in assignment
-    // error: no match for operator' (operand types are 'int' and 'const Polynom')
-    
-    Polynom q = 0;
-	Polynom e = n;
-	int t = 0;
-	while (  ( e != 0 ) && (((int)& n) >= ((int)& m))  )
+
+    Polynom res = 0;
+	Polynom e(*this);
+
+	double t = 0;
+	int w = 0;
+	while ( !e.empty() && (e.n >= b.n) )
 	{
-		t = e / b;
-		q = q + t;
-		e = e - (t * b);
+		t = e.koef[e.n] / b.koef[b.n];
+		w = e.n - b.n;
+		Polynom temp;
+		temp.addKoef(w,t);
+		res = res + temp;
+		temp = temp * b;
+		e = e - temp;
+
 	}
-	return (q);
+	return res;
 
 
 }
 
+Polynom Polynom::operator%(const Polynom & b)
+{
 
+    Polynom res = 0;
+	Polynom e(*this);
+
+	double t = 0;
+	int w = 0;
+	while ( !e.empty() && (e.n >= b.n) )
+	{
+		t = e.koef[e.n] / b.koef[b.n];
+		w = e.n - b.n;
+		Polynom temp;
+		temp.addKoef(w,t);
+		temp = temp * b;
+		e = e - temp;
+	}
+	return e;
+}
 
 Polynom Polynom::operator=(const Polynom &t)
 {
@@ -164,17 +203,29 @@ Polynom Polynom::operator=(const Polynom &t)
     }
     return *this;
 }
+bool Polynom::operator==(const Polynom & r)
+{
 
-bool Polynom::operator==(const Polynom & r) 
+    if(n != r.n) return false;
+    for(int i = 0; i <= n; i++)
+    {
+        if (koef[i] != r.koef[i])
+            return false;
+    }
+    return true;
+}
+
+/*
+bool Polynom::operator==(const Polynom & r)
 {
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < r.n; j++)
-			if ((koef[i] == r.koef[j]) && (n = (int)& m))
+			if ((koef[i] == r.koef[j]) && (n = r.n)
 				return true;
 			else
 				return false;
 }
-
+*/
 istream &operator>>(istream &s, Polynom &c)// перегруженный оператор ввода
 {
     int i;
@@ -243,12 +294,13 @@ int main()
     cin >> A;
     cout << "Введите коэффициенты полинома B:" << "\n";
     cin >> B;
-    cout << setw(17) << "Многочлен А:" << setw(5) << A << "\n";
-    cout << setw(17) << "Многочлен B:" << setw(5) << B << "\n";
-    cout << setw(17) << "Многочлен D=A+B:" << setw(5) << (D = A + B) << "\n";
-    cout << setw(17) << "Многочлен K=A-B:" << setw(5) << (K = A - B) << "\n";
-    cout << setw(17) << "Многочлен Y=A*B:" << setw(5) << (Y = A*B)<< "\n";
-    cout << setw(17) << "Сравнение  A==B:" << setw(5) << (A==B)<< "\n";
-    cout << setw(17) << "Многочлен P=A/B:" << setw(5) << (P = A/B)<< "\n";
+    cout << "Многочлен А:" << A << "\n";
+    cout << "Многочлен B:" << B << "\n";
+    cout << "Многочлен D=A+B:" << (D = A + B) << "\n";
+    cout << "Многочлен K=A-B:" << (K = A - B) << "\n";
+    cout << "Многочлен Y=A*B:" << (Y = A*B)<< "\n";
+    cout << "Сравнение  A==B:" << (A==B)<< "\n";
+    cout << "Многочлен P=A/B:" << (P = A/B)<< "\n";
+    cout << "Многочлен P=A%B:" << (P = A%B)<< "\n";
     system("pause");
-}
+} 
