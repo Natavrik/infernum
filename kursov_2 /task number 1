@@ -1,0 +1,148 @@
+#include <iostream>
+#include <Windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+using namespace std;
+
+class Authors
+{
+	private:
+		int  ID_painter;
+		string FIO_painter;
+		string s =
+			"\n\n\t\tАвторы:\n"
+			"+-------------------------------------------+\n"
+			"|  Идентификационный №   |   ФИО художника  |\n"
+			"+-------------------------------------------+\n";
+	public:
+		Authors(int ID_painter, string FIO_painter)
+		{
+			this->ID_painter = ID_painter;
+			this->FIO_painter = FIO_painter;
+		}
+
+		int getID_painter() { return ID_painter; }
+		void show()
+		{
+			cout.width(26); cout << left << ID_painter;
+			cout << FIO_painter << endl;
+		}
+		string  gets() { return s; }
+};
+
+template <class T>
+	void show(T* a, int n)
+	{
+		cout << a->gets() << endl;
+		for (int i = 0; i < n; i++)
+		{
+			a[i].show();
+		}
+	}
+
+class Sections
+{
+	private:
+		int  NUM_section;
+		string Section_Title;
+		string s = 
+			"\n\n\t\tРазделы:\n"
+			"+----------------------------------------------+\n"
+			"|       № раздела        |   Название раздела  |\n"
+			"+----------------------------------------------+\n";
+	public:
+		Sections(int NUM_section, string Section_Title)
+		{
+			this->NUM_section = NUM_section;
+			this->Section_Title = Section_Title;
+		}
+		int getNUM_section() { return NUM_section; }
+		void show()
+		{
+			cout.width(26); cout << left << NUM_section;
+			cout << Section_Title << endl;
+		}
+		string  gets() { return s; }
+};
+
+class Pictures
+{
+	private:
+		int NUM_picture;
+		string Picture_Title;
+		Authors* ID_painterPic;
+		Sections* NUM_sectionPic;
+		string Technics;
+		string Size_picture;
+		int Cost;
+		string s = 
+			"\n\n\t\tКартины:\n"
+			"+---------------------------------------------------------------------------------------------------------------------------------------------------+\n"
+			"|    № картины       |    Название картины    |    Идентификационный №   |    № раздела    |      Техника      |      Размеры картины  |  Стоимость |\n"
+			"+---------------------------------------------------------------------------------------------------------------------------------------------------+\n";
+	public:
+		Pictures(int NUM_picture, string Picture_Title, Authors* ID_painterPic,
+			Sections* NUM_sectionPic, string Technics, string Size_picture, int Cost)
+		{
+			this->NUM_picture = NUM_picture;
+			this->Picture_Title = Picture_Title;
+			this->ID_painterPic = ID_painterPic;
+			this->NUM_sectionPic = NUM_sectionPic;
+			this->Technics = Technics;
+			this->Size_picture = Size_picture;
+			this->Cost = Cost;
+		}
+		void show()
+		{
+			cout.width(26); cout << left << NUM_picture;
+			cout.width(25); cout << left << Picture_Title;
+			cout.width(27); cout << left << ID_painterPic->getID_painter();
+			cout.width(20); cout << left << NUM_sectionPic->getNUM_section();
+			cout.width(20); cout << left << Technics;
+			cout.width(20); cout << left << Size_picture;
+			cout << Cost << endl;
+		}
+		string  gets() { return s; }
+};
+
+int main()
+{
+	setlocale(0, "");
+
+	Authors a[] =
+	{
+		Authors(100, "Крупень С."),
+		Authors(101, "Беляев Р.Х."),
+		Authors(103, "Кручинкин Ю."),
+		Authors(104, "Малевич П.")
+	};
+
+	int n = sizeof(a) / sizeof(Authors); /// длина
+	show(a, n);
+
+	Sections s[] =
+	{
+		Sections(10, "Городской пейзаж"),
+		Sections(11, "Натюрморт")
+	};
+
+	int h = sizeof(s) / sizeof(Sections);
+	show(s, h);
+
+	Pictures p[] =
+	{
+		Pictures(1001, "Даниловский монастырь", &a[1], &s[0], "Пастель", "40х50", 40000),
+		Pictures(1002, "Весёлый денёк", &a[1], &s[1], "Масло, холст", "45х70", 15000),
+		Pictures(1003, "Старая Москва", &a[2], &s[0], "Акварель", "30х60", 12000),
+		Pictures(1004, "Старая Москва", &a[0], &s[0], "Масло, холст", "30х50", 20000),
+		Pictures(1005, "Пионы", &a[0], &s[1], "Масло, холст", "80х70", 50000),
+		Pictures(1006, "Таганский парк", &a[1], &s[0], "Акварель", "60х40", 25000)
+	};
+
+	int o = sizeof(p) / sizeof(Pictures);
+	show(p, o);
+
+	cin.get();
+	system("pause");
+	return 0;
+}
