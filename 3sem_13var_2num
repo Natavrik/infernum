@@ -1,0 +1,148 @@
+#include <iostream>
+#include <Windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+using namespace std;
+
+class Book
+{
+private:
+	string ISBN;
+	string FIO_authors; 
+	string Name_book; 
+	int	   Year_of_pub;
+	string Cost;
+		
+public:
+	Book(string ISBN, string FIO_authors ,string Name_book ,int Year_of_pub, string Cost)
+	{
+		this->ISBN = ISBN;
+		this->FIO_authors = FIO_authors;
+		this->Name_book = Name_book;
+		this->Year_of_pub = Year_of_pub;
+		this->Cost = Cost;
+	}
+
+	string getISBN() { return ISBN; }
+	void show()
+	{
+		cout.width(17); cout << left << ISBN;
+		cout.width(26); cout << left << FIO_authors;
+		cout.width(24); cout << left << Name_book;
+		cout.width(10); cout << left << Year_of_pub;
+		cout << Cost << endl;
+	}
+	string  gets() { return "\n\n\t\tКниги:\n"
+		"+-----------------------------------------------------------------------------------+\n"
+		"|     ISBN      |       ФИО автора        |  Название книги  | Год издания |  Цена  |\n"
+		"+-----------------------------------------------------------------------------------+\n";
+	}
+};
+
+template <class T>
+void show(T* a, int n)
+{
+	cout << a->gets() << endl;
+	for (int i = 0; i < n; i++)
+	{
+		a[i].show();
+	}
+}
+
+class Orders
+{
+private:
+	int	   NUM_order;
+	string Delivery_address;
+	string Order_date;
+	string Date_of_order_completion;
+		
+public:
+	Orders(int NUM_order, string Delivery_address, string Order_date, string Date_of_order_completion)
+	{
+		this->NUM_order = NUM_order;
+		this->Delivery_address = Delivery_address;
+		this->Order_date = Order_date;
+		this->Date_of_order_completion = Date_of_order_completion;
+	}
+	int getNUM_order() { return NUM_order; }
+	void show()
+	{
+		cout.width(13); cout << left << NUM_order;
+		cout.width(51); cout << left << Delivery_address;
+		cout.width(16); cout << left << Order_date;
+		cout << Date_of_order_completion << endl;
+	}
+	string  gets() { return "\n\n\t\tЗаказы:\n"
+		"+---------------------------------------------------------------------------------------------------+\n"
+		"| № заказа |                    Адрес доставки               | Дата заказа | Дата выполнения заказа |\n"
+		"+---------------------------------------------------------------------------------------------------+\n";}
+};
+
+class Order_books
+{
+private:
+	
+	Orders* NUM_order_OB;
+	Book* ISBN_OB;
+	
+public:
+	Order_books(Orders* NUM_order_OB, Book* ISBN_OB)
+	{
+		this->NUM_order_OB = NUM_order_OB;
+		this->ISBN_OB = ISBN_OB;
+		
+	}
+	void show()
+	{
+		cout.width(13); cout << left << NUM_order_OB->getNUM_order();
+		cout << left << ISBN_OB->getISBN() << endl;
+	}
+	string  gets() { return "\n\n\t\tКартины:\n"
+		"+----------------------------+\n"
+		"| № заказа |       ISBN      |\n"
+		"+----------------------------+\n"; }
+};
+
+int main()
+{
+	setlocale(0, "");
+
+	Book a[] =
+	{
+		Book("978-5-388-00003","Иванов Сергей Степанович","Самоучитель JAVA",2012,"300руб."),
+		Book("978-5-699-58103","Сидорова Ольга Юрьевна","JAVA за 21 день",2013,"600руб."),
+		Book("758-3-004-87105","Петров Иван Петрович","Сопромат",2013,"350руб."),
+		Book("758-3-057-37854","Иванов Сергей Степанович","Механика",2011,"780руб."),
+		Book("675-3-423-00375","Петров Иван Петрович","Физика",2013,"450руб.")
+	};
+
+	int n = sizeof(a) / sizeof(Book); /// длина
+	show(a, n);
+
+	Orders s[] =
+	{
+		Orders(123456,"Малая Арнаутская ул., д.9,кв.16 Иванов Игорь","20.09.2013","22.09.20132"),
+		Orders(222334,"Курчатов бульвар, д.33,кв.9 Петрова Светлана","21.09.2013","-"),
+		Orders(432152,"Нахимовский проспект, д.12,кв.89 Васин Иван","21.09.2012","23.09.2012"),
+	};
+
+	int h = sizeof(s) / sizeof(Orders);
+	show(s, h);
+
+	Order_books p[] =
+	{
+		Order_books(&s[0],&a[0]),
+		Order_books(&s[0],&a[1]),
+		Order_books(&s[2],&a[0]),
+		Order_books(&s[1],&a[0]),
+		Order_books(&s[1],&a[4])
+	};
+
+	int o = sizeof(p) / sizeof(Order_books);
+	show(p, o);
+
+	cin.get();
+	system("pause");
+	return 0;
+}
